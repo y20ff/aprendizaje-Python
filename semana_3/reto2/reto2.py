@@ -36,27 +36,41 @@ def eliminar (contactos):
         return
 
 def menu ():
+    try:
+       with open("agenda.txt","r") as archivo:
+        for linea in archivo:
+            nombre,numero = linea.strip().split(",")
+            contactos[nombre]=numero
+    except FileNotFoundError:
+       pass
+
     while True:
-         print("1:Agrega tu contacto")
-         print("2:Busca tu contacto")
-         print("3:Elimina tu contacto")
-         print("4:Salir")
+              
+     try:
+        print("1:Agrega tu contacto")
+        print("2:Busca tu contacto")
+        print("3:Elimina tu contacto")
+        print("4:Salir")
+        
+        selection = int(input("elige una de las opciones: "))
+        match selection :
+         case 1 : 
+            agregar(contactos)
+         case 2 : 
+            buscar(contactos)
+         case 3 :
+            eliminar(contactos)
+         case 4 :
+            print("gracias por utilizra nuestra agenda 😊")
+            with open ("agenda.txt","w") as archivo:
+               for nombre,numero in contactos.items():
+                archivo.write(f"{nombre},{numero}\n")
+            break
 
-         selection = input("seleciona una de las opciones : ")
-
-         if not selection.isdigit():
-             print("por favor ingresa un numero")
-             continue
-         
-         match int(selection):
-             case 1:
-                 agregar(contactos)
-             case 2 : 
-                 buscar(contactos)
-             case 3 : 
-                 eliminar(contactos)
-             case 4 :
-                 print("Hasta luego 🤝")
-                 break
-             
+     except ValueError:
+        print("Error , no debes elegir letras solo numeros")
 menu()
+
+"""
+implemente manejo de errores (try\except) y un archivo.txt para almacenar los contactos
+"""
