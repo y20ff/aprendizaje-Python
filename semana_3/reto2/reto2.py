@@ -51,6 +51,7 @@ def menu ():
         print("2:Busca tu contacto")
         print("3:Elimina tu contacto")
         print("4:Salir")
+        print("5.ver contactos")
         
         selection = int(input("elige una de las opciones: "))
         match selection :
@@ -63,10 +64,17 @@ def menu ():
          case 4 :
             print("gracias por utilizra nuestra agenda 😊")
             with open ("agenda.txt","w") as archivo:
-               for nombre,numero in contactos.items():
+             for nombre,numero in contactos.items():
                 archivo.write(f"{nombre},{numero}\n")
-            break
+                break
+         case 5:
+            if len(contactos) == 0 :
+             print("tu agenda esta vacia ")
 
+            for nombre,numero in contactos.items():
+                print(f"{nombre}:{numero}")
+                
+    
      except ValueError:
         print("Error , no debes elegir letras solo numeros")
 menu()
